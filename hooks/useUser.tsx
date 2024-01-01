@@ -28,6 +28,7 @@ export const MyUserContextProvider = (props: Props) => {
     isLoading: isLoadingUser,
     supabaseClient: supabase,
   } = useSessionContext();
+
   const user = useSupaUser();
   const accessToken = session?.access_token ?? null;
   const [isLoadingData, setIsLoadingData] = useState(false);
@@ -35,6 +36,7 @@ export const MyUserContextProvider = (props: Props) => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   const getUserDetails = () => supabase.from("users").select("*").single();
+
   const getSubscription = () =>
     supabase
       .from("subscription")
@@ -54,7 +56,6 @@ export const MyUserContextProvider = (props: Props) => {
           if (userDetailsPromise.status === "fulfilled") {
             setUserDetails(userDetailsPromise.value.data as UserDetails);
           }
-
           if (subscriptionPromise.status === "fulfilled") {
             setSubscription(subscriptionPromise.value.data as Subscription);
           }
